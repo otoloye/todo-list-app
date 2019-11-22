@@ -4,25 +4,36 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { Todos: ['Buy Water', 'Eat Food', 'Look around'] };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      todos: ['Buy Water', 'Eat Food', 'Look around'],
+      newTodo: ''
+    };
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-  }
+  clearTodo = () => {
+    this.setState({ todos: [] });
+  };
 
-  handleChange(e) {
-    this.setState({ Todos: e.target.value });
-  }
+  handleChange = e => {
+    this.setState({ newTodo: e.target.value });
+  };
+
+  handleSubmit = () => {
+    this.setState(state => {
+      const todos = state.todos.concat(state.newTodo);
+      return {
+        todos,
+        newTodo: ''
+      };
+    });
+  };
 
   render() {
     return (
       <div className="todo-container">
         <ul className="todo-unordered-list">
-          {this.state.Todos.map(todo => (
-            <li>{todo}</li>
+          {this.state.todos.map(todo => (
+            <li key={todo}>{todo}</li>
           ))}
         </ul>
         <div>
@@ -30,11 +41,23 @@ class App extends Component {
             type="text"
             placeholder="Enter todo here"
             className="todo-input"
-            value={this.state.Todos}
+            value={this.state.newTodo}
             onChange={this.handleChange}
           />
-          <button onClick={this.handleSubmit} className="todo-button">
-            Add todo
+          <button
+            type="button"
+            onClick={this.handleSubmit}
+            className="todo-button"
+          >
+            Add Todo
+          </button>
+
+          <button
+            type="button"
+            onClick={this.clearTodo}
+            className="todo-button"
+          >
+            Clear Todo
           </button>
         </div>
       </div>
