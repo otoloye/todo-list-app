@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const Todos = ['Buy Water', 'Eat Food', 'Look around'];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="todo-container">
+      <ul className="todo-unordered-list">
+        {Todos.map(todo => (
+          <li>{todo}</li>
+        ))}
+      </ul>
+      <div>
+        <input
+          type="text"
+          placeholder="Enter todo here"
+          className="todo-input"
+        />
+        <button type="submit" className="todo-button">
+          Add todo
+        </button>
+      </div>
     </div>
   );
 }

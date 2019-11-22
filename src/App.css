@@ -1,22 +1,16 @@
-.App {
-  text-align: center;
+.todo-container{
+  margin-left: 3rem;
 }
 
-.App-logo {
-  height: 40vmin;
+.todo-input{
+  margin-left: 1rem;
+  width: 10rem;
+  height: 2rem;
+  border: 2px solid black;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
+.todo-button{
+  margin-left: 1rem;
+  width: 5rem;
+  height: 2rem;
 }
