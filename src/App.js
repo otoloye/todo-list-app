@@ -6,7 +6,8 @@ class App extends Component {
     super(props);
     this.state = {
       todos: ['Buy Water', 'Eat Food', 'Look around'],
-      newTodo: ''
+      newTodo: '',
+      disableButton: false
     };
   }
 
@@ -15,50 +16,61 @@ class App extends Component {
   };
 
   handleChange = e => {
-    this.setState({ newTodo: e.target.value });
+    this.setState({
+      newTodo: e.target.value,
+      disableButton: !isNaN(Number(e.target.value))
+    });
   };
 
-  handleSubmit = () => {
-    this.setState(state => {
-      const todos = state.todos.concat(state.newTodo);
-      return {
-        todos,
-        newTodo: ''
-      };
-    });
+  handleSubmit = e => {
+    e.preventDefault();
+    const todo = this.state.newTodo.trim();
+
+    if (todo.length > 0 && isNaN(Number(todo))) {
+      this.setState(state => {
+        const todos = [...state.todos, state.newTodo];
+        return {
+          todos,
+          newTodo: ''
+        };
+      });
+    }
   };
 
   render() {
     return (
       <div className="todo-container">
-        <ul className="todo-unordered-list">
-          {this.state.todos.map(todo => (
-            <li key={todo}>{todo}</li>
-          ))}
-        </ul>
         <div>
-          <input
-            type="text"
-            placeholder="Enter todo here"
-            className="todo-input"
-            value={this.state.newTodo}
-            onChange={this.handleChange}
-          />
-          <button
-            type="button"
-            onClick={this.handleSubmit}
-            className="todo-button"
-          >
-            Add Todo
-          </button>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              placeholder="Enter todo here"
+              className="todo-input"
+              value={this.state.newTodo}
+              onChange={this.handleChange}
+            />
 
-          <button
-            type="button"
-            onClick={this.clearTodo}
-            className="todo-button"
-          >
-            Clear Todo
-          </button>
+            <button
+              type="submit"
+              className="todo-button"
+              disabled={this.state.disableButton}
+            >
+              Add Todo
+            </button>
+
+            <button
+              type="button"
+              onClick={this.clearTodo}
+              className="todo-button"
+            >
+              Clear Todo
+            </button>
+          </form>
+          <ul className="todo-unordered-list">
+            {this.state.todos.map(todo => (
+              <li key={todo}>{todo}</li>
+            ))}
+          </ul>
         </div>
       </div>
     );
