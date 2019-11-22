@@ -41,20 +41,15 @@ class App extends Component {
     }
   };
 
-  handleChecked = e => {
-    e.preventDefault();
-    this.setState(() => {});
+  handleChecked = todo => {
+    const todos = [...this.state.todos].map(item => {
+      if (item.title === todo.title) {
+        item.completed = !item.completed;
+      }
+      return item;
+    });
+    this.setState({ todos });
   };
-
-  // updateTodo = index => {
-  //   this.setState(state => {
-  //     const todo = state.todos.map((item, j) => {
-  //       if (j === index) {
-  //         return item;
-  //       }
-  //     });
-  //   });
-  // };
 
   render() {
     return (
@@ -85,9 +80,8 @@ class App extends Component {
               Clear Todo
             </button>
           </form>
-          {this.state.todos.map((todo, index) => (
-            <div className="todo-item" key={index}>
-              {/* {todo.completed} ? */}
+          {this.state.todos.map(todo => (
+            <div className="todo-item" key={todo.title}>
               <p
                 className={
                   todo.completed
@@ -97,12 +91,7 @@ class App extends Component {
               >
                 {todo.title}
               </p>
-              <input type="checkbox" onClick={e => this.handleChecked(e)} />
-              {/* : <p className="todo-item-title">{todo.title}</p>
-              <input type="checkbox" onClick={this.handleChecked} /> */}
-              {/* <button type="button" onClick={this.updateTodo(index)}>
-                Edit
-              </button> */}
+              <input type="checkbox" onClick={e => this.handleChecked(todo)} />
             </div>
           ))}
         </div>
