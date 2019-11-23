@@ -13,12 +13,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const mytodos = JSON.parse(localStorage.getItem('myTodo'));
-    console.log(mytodos);
-    this.setState({ todos: mytodos, newTodo: '', disableButton: false });
+    const todos = localStorage.getItem('myTodo')
+      ? JSON.parse(localStorage.getItem('myTodo'))
+      : [];
+    this.setState({ todos, newTodo: '', disableButton: false });
   }
 
   clearTodo = () => {
+    localStorage.removeItem('myTodo');
     this.setState({ todos: [] });
   };
 
@@ -38,7 +40,7 @@ class App extends Component {
 
     if (todo.length > 0 && isNotPresent(this.state.todos, todo)) {
       this.setState(() => {
-        const todos = [...this.state.todos, { title: todo }];
+        const todos = [...this.state.todos, { title: todo, completed: false }];
         localStorage.setItem('myTodo', JSON.stringify(todos));
         return {
           todos,
@@ -56,6 +58,7 @@ class App extends Component {
       return item;
     });
     this.setState({ todos });
+    localStorage.setItem('myTodo', JSON.stringify(todos));
   };
 
   render() {
@@ -79,26 +82,30 @@ class App extends Component {
               Add Todo
             </button>
 
-            {/* <button
+            <button
               type="button"
               onClick={this.clearTodo}
               className="todo-button"
             >
               Clear Todo
-            </button> */}
+            </button>
           </form>
           {this.state.todos.map(todo => (
             <div className="todo-item" key={todo.title}>
               <p
                 className={
-                  //   todo.completed
-                  //   ? 'todo-completed todo-item-title' :
-                  'todo-item-title'
+                  todo.completed
+                    ? 'todo-completed todo-item-title'
+                    : 'todo-item-title'
                 }
               >
                 {todo.title}
               </p>
-              {/* <input type="checkbox" onClick={e => this.handleChecked(todo)} /> */}
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={e => this.handleChecked(todo)}
+              />
             </div>
           ))}
         </div>
