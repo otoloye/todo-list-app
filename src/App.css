@@ -1,5 +1,18 @@
+.app-root{
+  display: flex;
+}
+.func-root {
+  padding: 2rem;
+  width: 50vw;
+  height: 100vh;
+}
+
 .todo-container{
+  padding: 2rem;
+  width: 50vw;
+  height: 100vh;
   margin-left: 3rem;
+  border-right: 1px solid black;
 }
 
 .todo-input{
