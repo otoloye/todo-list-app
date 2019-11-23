@@ -12,6 +12,11 @@ class App extends Component {
     };
   }
 
+  // componentDidMount() {
+  //   const mytodos = localStorage.getItem('myTodo');
+  //   this.setState({ todos: mytodos, newTodo: '', disableButton: false });
+  // }
+
   clearTodo = () => {
     this.setState({ todos: [] });
   };
@@ -33,6 +38,7 @@ class App extends Component {
     if (todo.length > 0 && isNotPresent(this.state.todos, todo)) {
       this.setState(() => {
         const todos = [...this.state.todos, { title: todo, completed: false }];
+        localStorage.setItem('myTodo', JSON.stringify(todos));
         return {
           todos,
           newTodo: ''
