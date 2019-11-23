@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { isNotPresent } from './utils/helpers';
 
+// Use this if not using useEffect()
+const initialTodos = localStorage.getItem('myTodoFunc')
+  ? JSON.parse(localStorage.getItem('myTodoFunc'))
+  : [];
+
 const TodoFunc = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(initialTodos);
   const [newTodo, setNewTodo] = useState('');
   const [disableButton, setDisableButton] = useState(false);
-
-  useEffect(() => {
-    const initialTodos = localStorage.getItem('myTodoFunc')
-      ? JSON.parse(localStorage.getItem('myTodoFunc'))
-      : [];
-    setTodos(initialTodos);
-  }, []);
 
   const clearTodo = () => {
     localStorage.removeItem('myTodoFunc');
