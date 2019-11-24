@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 It is a simple todo-list-app showing how to build react applications using class components and functional compoenents to achieve the same result.
 
+To see how it works visit [reactjs-todo-list-app.herokuapp.com](https://reactjs-todo-list-app.herokuapp.com/)
+
 ## Available Scripts
 
 In the project directory, you can run:
