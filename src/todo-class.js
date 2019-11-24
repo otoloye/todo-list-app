@@ -3,6 +3,9 @@ import { isNotPresent } from './utils/helpers';
 
 class TodoClass extends Component {
   state = {
+    // NOTE: If you would not like to use the componentDidMount(),
+    // can reference todos here like this
+
     // todos: localStorage.getItem('myTodo')
     //   ? JSON.parse(localStorage.getItem('myTodo'))
     //   : [],
@@ -63,6 +66,7 @@ class TodoClass extends Component {
   render() {
     return (
       <div className="todo-container">
+        <h2>Todo List App using class component</h2>
         <div>
           <form onSubmit={this.handleSubmit}>
             <input

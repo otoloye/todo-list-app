@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { isNotPresent } from './utils/helpers';
 
-// Use this if not using useEffect()
-const initialTodos = localStorage.getItem('myTodoFunc')
-  ? JSON.parse(localStorage.getItem('myTodoFunc'))
-  : [];
+// NOTE: Use this if not using useEffect()
+// Remember to: useState([initialTodos]) on
+
+// const initialTodos = localStorage.getItem('myTodoFunc')
+//   ? JSON.parse(localStorage.getItem('myTodoFunc'))
+//   : [];
 
 const TodoFunc = () => {
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
   const [disableButton, setDisableButton] = useState(false);
+
+  let todosCopy = todos;
+
+  useEffect(() => {
+    const initialTodos = localStorage.getItem('myTodoFunc')
+      ? JSON.parse(localStorage.getItem('myTodoFunc'))
+      : [];
+    setTodos(initialTodos);
+    setNewTodo('');
+    setDisableButton(false);
+  }, []);
 
   const clearTodo = () => {
     localStorage.removeItem('myTodoFunc');
@@ -28,9 +41,10 @@ const TodoFunc = () => {
     e.preventDefault();
     const todo = newTodo.trim();
     if (todo.length > 0 && isNotPresent(todos, todo)) {
-      setTodos([...todos, { title: todo, completed: false }]);
-      localStorage.setItem('myTodoFunc', JSON.stringify(todos));
+      todosCopy = [...todosCopy, { title: todo, completed: false }];
+      setTodos(todosCopy);
       setNewTodo('');
+      localStorage.setItem('myTodoFunc', JSON.stringify(todosCopy));
     }
   };
 
@@ -47,6 +61,7 @@ const TodoFunc = () => {
 
   return (
     <div className="func-root">
+      <h2>Todo List App using functional component</h2>
       <div>
         <form onSubmit={handleSubmit}>
           <input
